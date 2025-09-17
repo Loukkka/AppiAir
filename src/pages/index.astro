@@ -1,5 +1,5 @@
 ---
-import BasicLayout from '../layout/BasicLayout.astro';
+import BasicLayout from '../layout/Basiclayout.astro';
 import Card from '../layout/Card.astro';
 
 const responseData = await fetch('https://randomuser.me/api/?results=11');
@@ -35,23 +35,20 @@ const users = await responseData.json();
         <style>
             #infinite-scroll-container,
             #infinite-scroll-container-2 {
-                scrollbar-width: none; /* Firefox */
-                -ms-overflow-style: none; /* IE and Edge */
+                scrollbar-width: none; 
+                -ms-overflow-style: none;
             }
 
         </style>
         <script type="module">
-            // Première ligne (vers la droite)
             const container1 = document.getElementById('infinite-scroll-container');
             const ul1 = document.getElementById('users-list');
             let usersData1 = [...ul1.children];
 
-            // Deuxième ligne (vers la gauche)
             const container2 = document.getElementById('infinite-scroll-container-2');
             const ul2 = document.getElementById('users-list-2');
             let usersData2 = [...ul2.children];
 
-            // Infinite scroll pour la première ligne
             container1.addEventListener('scroll', function() {
             if (container1.scrollLeft + container1.clientWidth >= container1.scrollWidth - 10) {
                 usersData1.forEach(node => {
@@ -124,82 +121,5 @@ const users = await responseData.json();
 }
 </style>
 
-
-    <!-- <div class="w-full overflow-x-auto whitespace-nowrap py-4" id="infinite-scroll-container" style="cursor: grab;">
-        <ul class="flex items-center gap-8" id="users-list">
-            {users.results.map((user) => (
-                <li class="inline-block">
-                    <Card user={user} />
-                </li>
-            ))}
-        </ul>
-    </div>
-    <script type="module">
-        let loading = false;
-        let page = 1;
-        const ul = document.getElementById('users-list');
-        const container = document.getElementById('infinite-scroll-container');
-
-        // Drag-to-scroll with mouse
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-
-        container.addEventListener('mousedown', (e) => {
-            isDown = true;
-            container.classList.add('active');
-            container.style.cursor = 'grabbing';
-            startX = e.pageX - container.offsetLeft;
-            scrollLeft = container.scrollLeft;
-        });
-
-        container.addEventListener('mouseleave', () => {
-            isDown = false;
-            container.classList.remove('active');
-            container.style.cursor = 'grab';
-        });
-
-        container.addEventListener('mouseup', () => {
-            isDown = false;
-            container.classList.remove('active');
-            container.style.cursor = 'grab';
-        });
-
-        container.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - container.offsetLeft;
-            const walk = (x - startX) * 2; // scroll-fast
-            container.scrollLeft = scrollLeft - walk;
-        });
-
-        async function loadMoreUsers() {
-            if (loading) return;
-            loading = true;
-            page++;
-            const res = await fetch(`https://randomuser.me/api/?results=8&page=${page}`);
-            const data = await res.json();
-            data.results.forEach(user => {
-                const li = document.createElement('li');
-                li.className = "inline-block";
-                // Utilise le même style que la carte Astro
-                li.innerHTML = `
-                    <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center">
-                        <img src="${user.picture.medium}" alt="${user.name.first} ${user.name.last}" class="rounded-full mb-2" />
-                        <div class="font-bold">${user.name.first} ${user.name.last}</div>
-                        <div class="text-sm text-gray-500">${user.email}</div>
-                    </div>
-                `;
-                ul.appendChild(li);
-            });
-            loading = false;
-        }
-
-        container.addEventListener('scroll', function() {
-            if (this.scrollLeft + this.clientWidth >= this.scrollWidth - 10) {
-                loadMoreUsers();
-            }
-        });
-    </script> -->
 </BasicLayout>
 
